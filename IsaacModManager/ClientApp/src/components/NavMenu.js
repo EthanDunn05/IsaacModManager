@@ -8,10 +8,10 @@ export class NavMenu extends Component {
     render() {
         return (
             <header>
-                <Navbar className="border-bottom shadow mb-3" light>
+                <Navbar className="border-bottom shadow mb-3" color="light" light>
                     <Container>
                         <NavbarBrand tag={Link} to="/">IsaacModManager</NavbarBrand>
-                        <Nav>
+                        <Nav navbar>
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                             </NavItem>

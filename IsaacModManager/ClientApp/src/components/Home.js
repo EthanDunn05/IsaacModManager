@@ -1,4 +1,5 @@
 ﻿import React, {Component} from 'react';
+import {Container} from "reactstrap";
 
 export class Home extends Component {
     static displayName = Home.name;
@@ -19,12 +20,10 @@ export class Home extends Component {
         return (
             <div>
                 {this.state.game.mods.map(mod =>
-                    <div>
-                        <p>{mod.directory}</p>
-                        <p>{mod.name}</p>
-                        <p>{mod.enabled ? "Enabled" : "Disabled"}</p>
-                        <br/>
-                    </div>
+                    <Container className="border rounded m-2 p-2">
+                        <h2>{mod.name}</h2>
+                        {mod.enabled ? "Enabled" : "Disabled"}
+                    </Container>
                 )}
             </div>
         );
