@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -24,16 +25,9 @@ namespace IsaacModManager.Models
             }
             set
             {
-                // TODO ADD EXCEPTION HANDLING FOR MOD ENABLING & DISABLING
-                if (value)
-                {
-                    File.Delete(Directory + @"\disable.it");
-                }
-                else
-                {
-                    var disableIt = File.Create(Directory + @"\disable.it");
-                    disableIt.Close();
-                }
+                // TODO: Implement exception handling
+                if (value) File.Delete(Directory + @"\disable.it");
+                else File.Create(Directory + @"\disable.it").Close();
             }
         }
     }
