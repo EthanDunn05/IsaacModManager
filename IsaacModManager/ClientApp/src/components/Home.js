@@ -1,5 +1,6 @@
 ﻿import React, {Component} from 'react';
-import {Container} from "reactstrap";
+import {Container, Form, FormGroup, FormText, Input, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap";
+import ModList from "./ModList";
 
 export class Home extends Component {
     static displayName = Home.name;
@@ -7,43 +8,14 @@ export class Home extends Component {
     constructor(props, context) {
         super(props, context);
         
-        this.state = {
-            game: null
-        };
-    }
-
-    componentDidMount() {
-         this.fetchGameData();
-    }
-    
-    renderMods() {
-        return (
-            <div>
-                {this.state.game.mods.map(mod =>
-                    <Container className="border rounded m-2 p-2">
-                        <h2>{mod.name}</h2>
-                        {mod.enabled ? "Enabled" : "Disabled"}
-                    </Container>
-                )}
-            </div>
-        );
     }
 
     render() {
-        let content = this.state.game == null 
-            ? <p>Loading...</p> 
-            : this.renderMods();
         
         return (
             <div>
-                {content}
+                <ModList/>
             </div>
         );
-    }
-
-    async fetchGameData() {
-        const response = await fetch("Game");
-        const data = await response.json();
-        this.setState({game: data});
     }
 }

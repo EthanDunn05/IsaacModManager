@@ -17,5 +17,12 @@ namespace IsaacModManager.Controllers
 
         [HttpGet]
         public Game Get() => _game;
+
+        [HttpPut("{index:int}")]
+        public IActionResult Put(int index, Mod mod)
+        {
+            _game.Mods[index] = mod;
+            return NoContent();
+        }
     }
 }

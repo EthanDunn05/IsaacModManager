@@ -15,13 +15,14 @@ namespace IsaacModManager.Models
 
         public string Directory { get; }
 
-        public IEnumerable<Mod> Mods
+        public List<Mod> Mods 
         {
             get
             {
                 var modDirectories = System.IO.Directory.GetDirectories(Directory + @"\mods");
-                return modDirectories.Select(directory => new Mod(directory));
+                return modDirectories.Select(directory => new Mod(directory)).ToList();
             }
+            set {}
         }
     }
 }
