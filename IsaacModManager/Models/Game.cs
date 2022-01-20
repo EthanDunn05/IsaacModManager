@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace IsaacModManager.Models
@@ -10,7 +13,6 @@ namespace IsaacModManager.Models
         public Game(string directory)
         {
             Directory = directory;
-            
         }
 
         public string Directory { get; }
@@ -19,10 +21,23 @@ namespace IsaacModManager.Models
         {
             get
             {
-                var modDirectories = System.IO.Directory.GetDirectories(Directory + @"\mods");
-                return modDirectories.Select(directory => new Mod(directory)).ToList();
+
+                try
+                {
+                    var modDirectories = System.IO.Directory.GetDirectories(Directory + @"\mods");
+                    return modDirectories.Select(directory => new Mod(directory)).ToList();
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    Console.Error.WriteLine(e.Message);
+                    return new List<Mod>();
+                }
             }
-            set {}
+        }
+
+        public static Game Default()
+        {
+            return new Game(@"G:\SteamLibrary\steamapps\common\The Binding of Isaac Rebirth");
         }
     }
 }

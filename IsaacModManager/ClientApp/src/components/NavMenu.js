@@ -12,9 +12,11 @@ export class NavMenu extends Component {
                     <Container>
                         <NavbarBrand tag={Link} to="/">IsaacModManager</NavbarBrand>
                         <Nav navbar>
+                            {/*
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                             </NavItem>
+                            */}
                         </Nav>
                     </Container>
                 </Navbar>
