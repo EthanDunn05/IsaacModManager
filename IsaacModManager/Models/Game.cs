@@ -21,7 +21,6 @@ namespace IsaacModManager.Models
         {
             get
             {
-
                 try
                 {
                     var modDirectories = System.IO.Directory.GetDirectories(Directory + @"\mods");

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -64,18 +65,28 @@ namespace IsaacModManager
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
+            
             Task.Run(ConfigureElectron);
         }
 
         public async void ConfigureElectron()
         {
             // Open Electron
-            var window = await Electron.WindowManager.CreateWindowAsync();
-            
-            window.SetMenuBarVisibility(false);
-            window.SetAutoHideMenuBar(true);
-            window.Maximize();
+            var window = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            {
+                Show = false,
+            });
+
+            window.OnReadyToShow += () =>
+            {
+                // Configuration
+                window.SetTitle("Isaac Mod Manager");
+                window.SetMenuBarVisibility(false);
+                window.SetAutoHideMenuBar(true);
+                window.Maximize();
+
+                window.Show();
+            };
         }
     }
 }
