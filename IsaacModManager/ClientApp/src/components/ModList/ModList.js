@@ -1,32 +1,39 @@
 ﻿import React from "react";
 import {Form, FormGroup, FormText, Input} from "reactstrap";
-import {GameContext} from "../context/GameContext";
+import DirectoryInput from "./DirectoryInput";
 
 
 export default class ModList extends React.Component {
     constructor(props, context) {
         super(props, context);
+        
+        this.state = {
+            mods: null,
+        }
+    }
+    
+    componentDidMount() {
+        this.fetchMods();
     }
     
     render() {
         return (
-            <GameContext.Consumer>
-                {({game, fetchGameData}) => (
-                    game == null ? <p>Loading...</p> :
+            this.state.mods == null ? <p>Loading...</p> :
+                <div>
+                    <DirectoryInput fetchMods={() => this.fetchMods()}/>
                     <Form className="form-check form-switch border rounded m-md-2">
-                        {game.mods.map((mod, index) =>
+                        {this.state.mods.map((mod, index) =>
                             <FormGroup className="m-2">
-                                <Input type="checkbox" checked={mod.enabled} onChange={(e) => this.handleModChange(e, mod, index, fetchGameData)}/>
+                                <Input type="checkbox" checked={mod.enabled} onChange={(e) => this.handleModChange(e, mod, index)}/>
                                 <FormText>{mod.name}</FormText>
                             </FormGroup>
                         )}
                     </Form>
-                )}
-            </GameContext.Consumer>
+                </div>
         );
     }
     
-    handleModChange(event, mod, index, fetchGameData) {
+    handleModChange(event, mod, index) {
         event.preventDefault();
         
         fetch(`Game/PutMod/${index}`, {
@@ -37,6 +44,12 @@ export default class ModList extends React.Component {
             },
             body: JSON.stringify(Object.assign(mod, {enabled: event.target.checked}))
         })
-            .then(() => fetchGameData());
+            .then(() => this.fetchMods());
+    }
+    
+     fetchMods() {
+        fetch("Game/GetMods")
+            .then(result => result.json())
+            .then(data => this.setState({mods: data}));
     }
 }

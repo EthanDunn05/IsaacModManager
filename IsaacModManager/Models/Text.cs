@@ -3,6 +3,11 @@
     // No, I can't use a string
     public class Text
     {
-        public string Body { get; set; }
+        public Text(string body)
+        {
+            Body = body;
+        }
+
+        public string Body { get; }
     }
 }

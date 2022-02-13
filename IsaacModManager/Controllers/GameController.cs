@@ -16,19 +16,22 @@ namespace IsaacModManager.Controllers
     {
 
         [HttpGet]
-        public Game Get() => GameDatabase.Game;
+        public Mod[] GetMods() => Database.Mods.ToArray();
+
+        [HttpGet]
+        public Text GetDirectory() => new(Database.GameDirectory);
         
         [HttpPut("{index:int}")]
         public IActionResult PutMod(int index, Mod mod)
         {
-            GameDatabase.Game.Mods[index] = mod;
+            Database.Mods[index] = mod;
             return NoContent();
         }
 
         [HttpPut]
         public IActionResult PutDirectory(Text directory)
         {
-            GameDatabase.Game = new Game(directory.Body);
+            Database.GameDirectory = directory.Body;
             return NoContent();
         }
     }
